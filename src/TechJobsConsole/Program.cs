@@ -77,7 +77,7 @@ namespace TechJobsConsole
         /*
          * Returns the key of the selected item from the choices Dictionary
          */
-        private static string GetUserSelection(string choiceHeader, Dictionary<string, string> choices)
+                        private static string GetUserSelection(string choiceHeader, Dictionary<string, string> choices)
         {
             int choiceIdx;
             bool isValidChoice = false;
@@ -118,7 +118,19 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("printJobs is not implemented yet");
+            foreach (Dictionary<string, string> row in someJobs)
+            {
+                Console.WriteLine("*****");
+                foreach (KeyValuePair<string, string> column in row)
+                {
+                    Console.WriteLine($"{column.Key}: {column.Value}");
+                }
+                Console.WriteLine("*****");
+                Console.WriteLine();
+
+            }
+
+            /* Console.WriteLine("printJobs is not implemented yet"); */
         }
     }
 }
