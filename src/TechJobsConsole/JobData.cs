@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -49,13 +51,35 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.Contains(value, StringComparison.OrdinalIgnoreCase))
                 {
                     jobs.Add(row);
                 }
             }
 
             return jobs;
+        }
+
+        public static List<Dictionary<string, string>> FindByValue(string searchTerm)
+        {
+            var jobs = FindAll();
+            var values = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> job in jobs)
+            {
+                foreach (KeyValuePair<string, string> item in job)
+                {
+                    if (item.Value.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!values.Contains(job))
+                        {
+                            values.Add(job);
+                        }
+                        continue;
+                    }
+                }
+            }
+            return values;
         }
 
         /*
@@ -137,6 +161,15 @@ namespace TechJobsConsole
             valueBuilder.Clear();
 
             return rowValues.ToArray();
+        }
+    }
+
+    // extension method for string comparison
+    public static class StringExtensions
+    {
+        public static bool Contains(this string source, string toCheck, StringComparison comp)
+        {
+            return source?.IndexOf(toCheck, comp) >= 0;
         }
     }
 }

@@ -63,11 +63,20 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("0 jobs found");
+                        }
+                        PrintJobs(searchResults);
                     }
                     else
                     {
                         searchResults = JobData.FindByColumnAndValue(columnChoice, searchTerm);
+                        if (searchResults.Count == 0)
+                        {
+                            Console.WriteLine("0 jobs found");
+                        }
                         PrintJobs(searchResults);
                     }
                 }
@@ -77,7 +86,7 @@ namespace TechJobsConsole
         /*
          * Returns the key of the selected item from the choices Dictionary
          */
-                        private static string GetUserSelection(string choiceHeader, Dictionary<string, string> choices)
+        private static string GetUserSelection(string choiceHeader, Dictionary<string, string> choices)
         {
             int choiceIdx;
             bool isValidChoice = false;
